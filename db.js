@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 // Function to establish a MongoDB connection
 const connectToMongo = () => {
-  
   try {
     mongoose.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
