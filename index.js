@@ -2,12 +2,15 @@ import express from "express";
 import { config as dotenvConfig } from "dotenv";
 import connectToMongo from "./db.js";
 
-const app = express();
-import cors from "cors";
 import { CreatePackage } from "./package/CreatePackage.js";
 import { GetPackage } from "./package/GetPackage.js";
 import { DeletePackage } from "./package/DeletePackage.js";
 import { UpdatePackage } from "./package/UpdatePackage.js";
+import { SamplePdfGenerator } from "./PDF Generation/SamplePdfGenerate.js";
+
+
+const app = express();
+import cors from "cors";
 
 dotenvConfig();
 
@@ -42,6 +45,9 @@ app.get("/deletePackage", DeletePackage);
 
 // update packages//
 app.get("/updatePackage", UpdatePackage);
+
+// generate pdf for all packages//
+app.get("/generate-pdf/:id", SamplePdfGenerator);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
