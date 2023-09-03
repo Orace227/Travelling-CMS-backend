@@ -3,14 +3,14 @@ import { config as dotenvConfig } from "dotenv";
 import connectToMongo from "./db.js";
 
 import { CreatePackage } from "./package/CreatePackage.js";
-import { GetPackage } from "./package/GetPackage.js";
+import { GetLivePackage } from "./package/GetLivePackage.js";
 import { DeletePackage } from "./package/DeletePackage.js";
 import { UpdatePackage } from "./package/UpdatePackage.js";
 import { SamplePdfGenerator } from "./PDF Generation/SamplePdfGenerate.js";
 
-
 const app = express();
 import cors from "cors";
+import { GetDraftPackage } from "./package/GetDraftPackage.js";
 
 dotenvConfig();
 
@@ -37,14 +37,17 @@ app.get("/", (req, res) => {
 // create package//
 app.post("/createPackage", CreatePackage);
 
-// get packages//
-app.get("/getPackages", GetPackage);
+// get live packages//
+app.get("/getLivePackages", GetLivePackage);
 
-// delete packages//
-app.get("/deletePackage", DeletePackage);
+// get draft packages//
+app.get("/getDraftPackages", GetDraftPackage);
 
 // update packages//
-app.get("/updatePackage", UpdatePackage);
+app.post("/updatePackage", UpdatePackage);
+
+// delete packages//
+app.post("/deletePackage", DeletePackage);
 
 // generate pdf for all packages//
 app.get("/generate-pdf/:id", SamplePdfGenerator);

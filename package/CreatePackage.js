@@ -1,12 +1,12 @@
 import Package from "../schemas/Package.js";
 
+
 export const CreatePackage = async (req, res) => {
   try {
     const PackageObj = await req.body;
     const existingPackage = await Package.findOne({
       PackageId: PackageObj.PackageId,
     });
-
     if (!existingPackage) {
       const createdPackage = await Package.create(PackageObj);
       if (createdPackage) {

@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import mongooseSequence from "mongoose-sequence";
-const AutoIncrement = mongooseSequence(mongoose);
 
 // Schema for tour details (day-wise)
 const tourDetailsSchema = new mongoose.Schema({
@@ -34,6 +32,12 @@ const packageSchema = new mongoose.Schema({
     type: Number,
     unique: true,
     required: true,
+    validate: {
+      validator: function (value) {
+        return value.toString().length === 6 && Number.isInteger(value);
+      },
+      message: "PackageId must be a 6-digit number.",
+    },
   },
   packageName: String,
   isLive: {
