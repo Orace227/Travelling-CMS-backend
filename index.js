@@ -15,6 +15,10 @@ import { CreateClient } from "./client/CreateClient.js";
 import { GetClients } from "./client/GetClients.js";
 import { DeleteClient } from "./client/DeleteClient.js";
 import { UpdateClient } from "./client/UpdateClient.js";
+import { CreateFamilyMembers } from "./familyMembers/CreateFamilyMember.js";
+import { GetFamilyMembers } from "./familyMembers/getClientMembers.js";
+import { DeleteFamilyMember } from "./familyMembers/DeleteFamilyMember.js";
+import { UpdateFamilyMember } from "./familyMembers/UpdateFamilyMember.js";
 
 dotenvConfig();
 
@@ -53,12 +57,8 @@ app.post("/updatePackage", UpdatePackage);
 // delete packages//
 app.post("/deletePackage", DeletePackage);
 
-
-
 // generate pdf for all packages//
 app.get("/generate-pdf/:id", SamplePdfGenerator);
-
-
 
 // create client //
 app.post("/createClient", CreateClient);
@@ -72,6 +72,17 @@ app.post("/updateClient", UpdateClient);
 // delete client //
 app.post("/deleteClient", DeleteClient);
 
+//create a Create Family Members
+app.post("/createFamilyMembers", CreateFamilyMembers);
+
+//get all family members for the specified client //
+app.get("/getFamilyMembers/:id", GetFamilyMembers);
+
+//update family member //
+app.post("/updateFamilyMember", UpdateFamilyMember);
+
+//delete family member //
+app.post("/DeleteFamilyMember", DeleteFamilyMember);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);

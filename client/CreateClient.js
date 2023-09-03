@@ -4,7 +4,7 @@ export const CreateClient = async (req, res) => {
   try {
     const ClientObj = await req.body;
     const existingClient = await Client.findOne({
-        ClientId: ClientObj.clientId,
+      ClientId: ClientObj.clientId,
     });
     if (!existingClient) {
       const createdClient = await Client.create(ClientObj);

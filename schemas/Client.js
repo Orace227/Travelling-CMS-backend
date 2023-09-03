@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
 
-// TODO: i have make some feilds unique 
+// TODO: i have make some feilds unique
 const clientSchema = new mongoose.Schema({
   clientId: {
     type: Number,
     unique: true,
     required: true,
+  },
+  familyMembers: {
+    type: Number,
+    default: 0,
   },
   firstName: {
     type: String,
