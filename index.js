@@ -31,7 +31,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.json("api working");
+  res.json({massage:"Welcome to the Travelling CMS Api Server!!"});
 });
 
 // create package//
