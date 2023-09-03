@@ -11,6 +11,10 @@ import { SamplePdfGenerator } from "./PDF Generation/SamplePdfGenerate.js";
 const app = express();
 import cors from "cors";
 import { GetDraftPackage } from "./package/GetDraftPackage.js";
+import { CreateClient } from "./client/CreateClient.js";
+import { GetClients } from "./client/GetClients.js";
+import { DeleteClient } from "./client/DeleteClient.js";
+import { UpdateClient } from "./client/UpdateClient.js";
 
 dotenvConfig();
 
@@ -31,7 +35,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.json({massage:"Welcome to the Travelling CMS Api Server!!"});
+  res.json({ massage: "Welcome to the Travelling CMS Api Server!!" });
 });
 
 // create package//
@@ -49,8 +53,25 @@ app.post("/updatePackage", UpdatePackage);
 // delete packages//
 app.post("/deletePackage", DeletePackage);
 
+
+
 // generate pdf for all packages//
 app.get("/generate-pdf/:id", SamplePdfGenerator);
+
+
+
+// create client //
+app.post("/createClient", CreateClient);
+
+// get client //
+app.get("/getClients", GetClients);
+
+// update client //
+app.post("/updateClient", UpdateClient);
+
+// delete client //
+app.post("/deleteClient", DeleteClient);
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
