@@ -48,7 +48,14 @@ const packageSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  packageType: {
+    type: String,
+    enum: ["hotel", "destination", "cruise"], // Add an enum to specify allowed values
+    required: true, // You can make it required if necessary
+  },
   packageImg: String,
+  country: String,
+  continent: String,
   packageBody: packageBodySchema,
 });
 

@@ -16,9 +16,13 @@ import { GetClients } from "./client/GetClients.js";
 import { DeleteClient } from "./client/DeleteClient.js";
 import { UpdateClient } from "./client/UpdateClient.js";
 import { CreateFamilyMembers } from "./familyMembers/CreateFamilyMember.js";
-import { GetFamilyMembers } from "./familyMembers/getClientMembers.js";
+import { GetFamilyMembers } from "./familyMembers/getFamilyMembers.js";
 import { DeleteFamilyMember } from "./familyMembers/DeleteFamilyMember.js";
 import { UpdateFamilyMember } from "./familyMembers/UpdateFamilyMember.js";
+import { GetPackages } from "./package/GetPackages.js";
+import { UploadDocuments } from "./Documents/UploadDocuments.js";
+import { GetDocuments } from "./Documents/GetDocuments.js";
+import { deleteDocument } from "./Documents/DeleteDocument.js";
 
 dotenvConfig();
 
@@ -51,6 +55,9 @@ app.get("/getLivePackages", GetLivePackage);
 // get draft packages//
 app.get("/getDraftPackages", GetDraftPackage);
 
+// get packages by country, continent, hostel, destinetion and cruise //
+app.get("/getPackages", GetPackages);
+
 // update packages//
 app.post("/updatePackage", UpdatePackage);
 
@@ -60,6 +67,14 @@ app.post("/deletePackage", DeletePackage);
 // generate pdf for all packages//
 app.get("/generate-pdf/:id", SamplePdfGenerator);
 
+// upload documents to server //
+app.post("/upload-documents", UploadDocuments);
+
+// get documents by family member id //
+app.get("/getDocuments/", GetDocuments);
+
+//delete documents by family member id //
+app.post("/deleteDocument", deleteDocument);
 // create client //
 app.post("/createClient", CreateClient);
 

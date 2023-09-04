@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+// TODO: i have make some feilds unique
+
 const familyMemberSchema = new mongoose.Schema({
   FamilyMemberId: {
     type: Number,
@@ -24,6 +26,10 @@ const familyMemberSchema = new mongoose.Schema({
   relationship: {
     type: String,
     required: true,
+  },
+  DocumentNumber: {
+    type: Number,
+    default: 0,
   },
   passportNumber: {
     type: String,
