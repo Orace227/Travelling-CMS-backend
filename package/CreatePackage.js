@@ -1,6 +1,5 @@
 import Package from "../schemas/Package.js";
 
-
 export const CreatePackage = async (req, res) => {
   try {
     const PackageObj = await req.body;

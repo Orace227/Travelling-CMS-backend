@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 // TODO: i have make some feilds unique
+const loyaltySchema = new mongoose.Schema({
+  type: String, // e.g., "Frequent Flyer" or "Hotel Loyalty"
+  number: String,
+});
 
 const familyMemberSchema = new mongoose.Schema({
   FamilyMemberId: {
@@ -27,6 +31,22 @@ const familyMemberSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  address: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  country: {
+    type: String,
+    required: true,
+  },
+  postalCode: {
+    type: String,
+    required: true,
+  },
   DocumentNumber: {
     type: Number,
     default: 0,
@@ -38,9 +58,8 @@ const familyMemberSchema = new mongoose.Schema({
   foodPreferences: {
     type: String,
   },
-  frequentFlyerNumber: {
-    type: String,
-  },
+  frequentFlyerNumbers: [loyaltySchema], // Array of frequent flyer numbers
+  hotelLoyaltyNumbers: [loyaltySchema], // Array of hotel loyalty numbers
 });
 
 const FamilyMember = mongoose.model("FamilyMember", familyMemberSchema);

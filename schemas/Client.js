@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 
-// TODO: i have make some feilds unique
+// Define a subdocument schema for frequent flyer and hotel loyalty numbers
+const loyaltySchema = new mongoose.Schema({
+  type: String, // e.g., "Frequent Flyer" or "Hotel Loyalty"
+  number: String,
+});
+
+
 const clientSchema = new mongoose.Schema({
   clientId: {
     type: Number,
@@ -11,6 +17,11 @@ const clientSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  totalBookings: {
+    type: Number,
+    default: 0,
+  },
+  
   firstName: {
     type: String,
     required: true,
@@ -22,11 +33,22 @@ const clientSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    // unique: true, // Make email unique
   },
-  phone: {
+  mobile: {
     type: String,
     required: true,
+    // unique: true, // Make mobile number unique
   },
+  dateOfBirth: Date,
+  passportNumber: {
+    type: String,
+    required: true,
+    // unique: true
+  },
+  passportExpiryDate: Date, // Add passport expiry date field
+  frequentFlyerNumbers: [loyaltySchema], // Array of frequent flyer numbers
+  hotelLoyaltyNumbers: [loyaltySchema], // Array of hotel loyalty numbers
   address: {
     type: String,
     required: true,
@@ -43,16 +65,10 @@ const clientSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  passportNumber: {
-    type: String,
-    required: true,
-  },
-  foodPreferences: {
-    type: String,
-  },
-  frequentFlyerNumber: {
-    type: String,
-  },
+  foodPreferences: String,
+  companyName: String,
+  companyGSTNumber: String,
+  companyGSTEmail: String,
 });
 
 const Client = mongoose.model("Client", clientSchema);

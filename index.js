@@ -1,15 +1,11 @@
 import express from "express";
 import { config as dotenvConfig } from "dotenv";
 import connectToMongo from "./db.js";
-
 import { CreatePackage } from "./package/CreatePackage.js";
 import { GetLivePackage } from "./package/GetLivePackage.js";
 import { DeletePackage } from "./package/DeletePackage.js";
 import { UpdatePackage } from "./package/UpdatePackage.js";
 import { SamplePdfGenerator } from "./PDF Generation/SamplePdfGenerate.js";
-
-const app = express();
-import cors from "cors";
 import { GetDraftPackage } from "./package/GetDraftPackage.js";
 import { CreateClient } from "./client/CreateClient.js";
 import { GetClients } from "./client/GetClients.js";
@@ -24,6 +20,12 @@ import { UploadDocuments } from "./Documents/UploadDocuments.js";
 import { GetDocuments } from "./Documents/GetDocuments.js";
 import { deleteDocument } from "./Documents/DeleteDocument.js";
 
+const app = express();
+import cors from "cors";
+import { CreateBooking } from "./booking/CreateBooking.js";
+import { GetBookings } from "./booking/GetBookings.js";
+import { DeleteBooking } from "./booking/DeleteBooking.js";
+import { BookedPdfGenerator } from "./PDF Generation/BookedPdfGenerate.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -66,12 +68,13 @@ app.post("/deletePackage", DeletePackage);
 
 // generate pdf for all packages//
 app.get("/generate-pdf/:id", SamplePdfGenerator);
+app.get("/BookedPdfGenerate", BookedPdfGenerator);
 
 // upload documents to server //
 app.post("/upload-documents", UploadDocuments);
 
 // get documents by family member id //
-app.get("/getDocuments/", GetDocuments);
+app.get("/getDocuments/x", GetDocuments);
 
 //delete documents by family member id //
 app.post("/deleteDocument", deleteDocument);
@@ -98,6 +101,14 @@ app.post("/updateFamilyMember", UpdateFamilyMember);
 
 //delete family member //
 app.post("/DeleteFamilyMember", DeleteFamilyMember);
+
+
+
+app.post("/createBooking", CreateBooking);
+
+app.get("/getBookings", GetBookings);
+
+app.post("/deleteBooking", DeleteBooking);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);

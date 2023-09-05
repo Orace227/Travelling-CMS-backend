@@ -50,8 +50,14 @@ const packageSchema = new mongoose.Schema({
   },
   packageType: {
     type: String,
-    enum: ["hotel", "destination", "cruise"], // Add an enum to specify allowed values
-    required: true, // You can make it required if necessary
+    enum: [
+      "destination",
+      "Wellness Resorts",
+      "Wildlife Drives",
+      "Sustainable paths",
+      "Cruise Vacations",
+    ],
+    required: true,
   },
   packageImg: String,
   country: String,
