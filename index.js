@@ -30,7 +30,7 @@ dotenvConfig();
 
 // here all varables are defined
 
-const port = 5000;
+const port = 7000;
 
 // conncted to db
 const db = connectToMongo();
@@ -101,8 +101,6 @@ app.post("/updateFamilyMember", UpdateFamilyMember);
 
 //delete family member //
 app.post("/DeleteFamilyMember", DeleteFamilyMember);
-
-
 
 app.post("/createBooking", CreateBooking);
 
