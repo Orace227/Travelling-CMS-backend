@@ -23,6 +23,16 @@ const familyMemberSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+    // unique: true, // Make email unique
+  },
+  mobile: {
+    type: String,
+    required: true,
+    // unique: true, // Make mobile number unique
+  },
   dateOfBirth: {
     type: Date,
     required: true,

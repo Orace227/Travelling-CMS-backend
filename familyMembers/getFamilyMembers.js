@@ -2,7 +2,7 @@ import FamilyMembers from "../schemas/FamilyMembers.js";
 
 export const GetFamilyMembers = async (req, res) => {
   try {
-    const clientId = req.params.id;
+    const clientId = await req.query.id;
     const allFamilyMembers = await FamilyMembers.find({ clientId });
     if (allFamilyMembers.length > 0) {
       res.status(200).json({

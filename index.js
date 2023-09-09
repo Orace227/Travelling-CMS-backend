@@ -94,7 +94,7 @@ app.post("/deleteClient", DeleteClient);
 app.post("/createFamilyMembers", CreateFamilyMembers);
 
 //get all family members for the specified client //
-app.get("/getFamilyMembers/:id", GetFamilyMembers);
+app.get("/getFamilyMembers", GetFamilyMembers);
 
 //update family member //
 app.post("/updateFamilyMember", UpdateFamilyMember);
