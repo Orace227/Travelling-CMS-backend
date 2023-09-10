@@ -19,7 +19,7 @@ import { GetPackages } from "./package/GetPackages.js";
 import { UploadDocuments } from "./Documents/UploadDocuments.js";
 import { GetDocuments } from "./Documents/GetDocuments.js";
 import { deleteDocument } from "./Documents/DeleteDocument.js";
-
+import UploadBanner from "./MiddleWares/UploadBanner.js";
 const app = express();
 import cors from "cors";
 import { CreateBooking } from "./booking/CreateBooking.js";
@@ -107,6 +107,12 @@ app.post("/createBooking", CreateBooking);
 app.get("/getBookings", GetBookings);
 
 app.post("/deleteBooking", DeleteBooking);
+
+app.post("/upload", UploadBanner.single("bannerImage"), async (req, res) => {
+  const packageImgPath = req.file.path;
+  
+  res.json({ message: "Image uploaded successfully", path: packageImgPath });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);

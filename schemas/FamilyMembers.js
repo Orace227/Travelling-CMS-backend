@@ -37,6 +37,10 @@ const familyMemberSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  passportExpiryDate: {
+    type: Date,
+    required: true,
+  },
   relationship: {
     type: String,
     required: true,

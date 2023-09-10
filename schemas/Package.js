@@ -59,7 +59,7 @@ const packageSchema = new mongoose.Schema({
     ],
     required: true,
   },
-  packageImg: String,
+  packageImgPath: String,
   country: String,
   continent: String,
   packageBody: packageBodySchema,

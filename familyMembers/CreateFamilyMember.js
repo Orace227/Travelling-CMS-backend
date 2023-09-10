@@ -5,7 +5,7 @@ export const CreateFamilyMembers = async (req, res) => {
   try {
     let allFamilyMembers = [];
     const { FamilyMembersArr } = await req.body;
-    // console.log(FamilyMembersArr);
+// console.log(FamilyMembersArr);
     for (let i = 0; i < FamilyMembersArr.length; i++) {
       const existingFamilyMember = await FamilyMembers.findOne({
         FamilyMemberId: FamilyMembersArr[i].FamilyMemberId,
