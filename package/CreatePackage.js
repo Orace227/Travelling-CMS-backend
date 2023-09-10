@@ -19,7 +19,7 @@ export const CreatePackage = async (req, res) => {
         });
       }
     } else {
-      res.json({
+      res.status(403).json({
         message: "Package was already exist!!",
       });
     }

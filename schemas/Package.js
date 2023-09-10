@@ -40,6 +40,7 @@ const packageSchema = new mongoose.Schema({
     },
   },
   packageName: String,
+  packageDesc: String,
   isLive: {
     type: Boolean,
     default: false,
