@@ -26,6 +26,7 @@ import { CreateBooking } from "./booking/CreateBooking.js";
 import { GetBookings } from "./booking/GetBookings.js";
 import { DeleteBooking } from "./booking/DeleteBooking.js";
 import { BookedPdfGenerator } from "./PDF Generation/BookedPdfGenerate.js";
+import { GetPackageImg } from "./GetPackageImg.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -110,9 +111,11 @@ app.post("/deleteBooking", DeleteBooking);
 
 app.post("/upload", UploadBanner.single("bannerImage"), async (req, res) => {
   const packageImgPath = req.file.path;
-  
+
   res.json({ message: "Image uploaded successfully", path: packageImgPath });
 });
+
+app.get("/BannerImg/:imageName", GetPackageImg);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);

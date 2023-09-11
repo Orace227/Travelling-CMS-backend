@@ -2,7 +2,7 @@ import multer from "multer";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Store files in the 'uploads' directory
+    cb(null, "BannerImg/"); // Store files in the 'uploads' directory
   },
   filename: async (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname); // Rename the file
