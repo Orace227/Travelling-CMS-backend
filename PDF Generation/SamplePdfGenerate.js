@@ -96,8 +96,7 @@ export const SamplePdfGenerator = async (req, res) => {
     }
 
     //fechting out the price//
-    if(!packageData.isLive){
-
+    if (packageData.isLive) {
       doc.fontSize(30).text(`  `);
       doc.fontSize(20).text(`     Package Price: ${packageData.packagePrice}`);
     }
