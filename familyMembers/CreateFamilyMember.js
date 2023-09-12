@@ -5,7 +5,7 @@ export const CreateFamilyMembers = async (req, res) => {
   try {
     let allFamilyMembers = [];
     const { FamilyMembersArr } = await req.body;
-// console.log(FamilyMembersArr);
+    // console.log(FamilyMembersArr);
     for (let i = 0; i < FamilyMembersArr.length; i++) {
       const existingFamilyMember = await FamilyMembers.findOne({
         FamilyMemberId: FamilyMembersArr[i].FamilyMemberId,
@@ -28,13 +28,13 @@ export const CreateFamilyMembers = async (req, res) => {
           allFamilyMembers.push(createdFamilyMember);
         }
       } else {
-        res.json({
+        res.status(403).json({
           message: "FamilyMembers was already exist!!",
         });
       }
     }
     if (allFamilyMembers.length > 0) {
-      res.json({
+      res.status(200).json({
         message: "Family Members was created!",
         allFamilyMembers,
       });
