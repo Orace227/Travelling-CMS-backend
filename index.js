@@ -16,7 +16,6 @@ import { GetFamilyMembers } from "./familyMembers/getFamilyMembers.js";
 import { DeleteFamilyMember } from "./familyMembers/DeleteFamilyMember.js";
 import { UpdateFamilyMember } from "./familyMembers/UpdateFamilyMember.js";
 import { GetPackages } from "./package/GetPackages.js";
-import { UploadDocuments } from "./Documents/UploadDocuments.js";
 import { GetDocuments } from "./Documents/GetDocuments.js";
 import { deleteDocument } from "./Documents/DeleteDocument.js";
 import UploadBanner from "./MiddleWares/UploadBanner.js";
@@ -27,6 +26,8 @@ import { GetBookings } from "./booking/GetBookings.js";
 import { DeleteBooking } from "./booking/DeleteBooking.js";
 import { BookedPdfGenerator } from "./PDF Generation/BookedPdfGenerate.js";
 import { GetPackageImg } from "./GetPackageImg.js";
+import { GetBookingsById } from "./booking/GetBookingsById.js";
+import UploadDocuments from "./MiddleWares/UploadDocuments.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -44,7 +45,7 @@ app.use(
     credentials: true,
   })
 );
-
+app.use(UploadDocuments.array("docImg", 10));
 app.get("/", (req, res) => {
   res.json({ massage: "Welcome to the Travelling CMS Api Server!!" });
 });
@@ -70,9 +71,6 @@ app.post("/deletePackage", DeletePackage);
 // generate pdf for all packages//
 app.get("/generate-pdf/:id", SamplePdfGenerator);
 app.get("/BookedPdfGenerate", BookedPdfGenerator);
-
-// upload documents to server //
-app.post("/upload-documents", UploadDocuments);
 
 // get documents by family member id //
 app.get("/getDocuments/x", GetDocuments);
@@ -105,17 +103,32 @@ app.post("/DeleteFamilyMember", DeleteFamilyMember);
 
 app.post("/createBooking", CreateBooking);
 
+app.get("/getBookingsById", GetBookingsById);
 app.get("/getBookings", GetBookings);
 
 app.post("/deleteBooking", DeleteBooking);
 
+// update banner images //
 app.post("/upload", UploadBanner.single("bannerImage"), async (req, res) => {
   const packageImgPath = req.file.path;
 
   res.json({ message: "Image uploaded successfully", path: packageImgPath });
 });
 
+// get banner images //
 app.get("/BannerImg/:imageName", GetPackageImg);
+
+// update documents of booking //
+app.post("/upload-images", UploadDocuments.array("docImg", 10), (req, res) => {
+  // Handle the uploaded files here, e.g., save their paths in a database
+  const uploadedFiles = req.files;
+  console.log("lunching");
+  // Respond with a success message
+  res.json({
+    message: "Images uploaded successfully.",
+    uploadedFiles: uploadedFiles,
+  });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);

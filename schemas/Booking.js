@@ -1,15 +1,31 @@
 import mongoose from "mongoose";
 
+const bookingDetailsSchema = new mongoose.Schema({
+  bookingType: {
+    type: String,
+    required: true,
+  },
+  bookingName: {
+    type: String,
+    required: true,
+  },
+  bookingDocPath: {
+    type: String,
+    required: true,
+  },
+});
+
 const bookingSchema = new mongoose.Schema({
   bookingId: {
     type: Number,
     unique: true,
     required: true,
-  },
-  inquiryId: {
-    type: Number,
-    unique: true,
-    required: true,
+    validate: {
+      validator: function (value) {
+        return value.toString().length === 6 && Number.isInteger(value);
+      },
+      message: "PackageId must be a 6-digit number.",
+    },
   },
   packageId: {
     type: Number,
@@ -24,23 +40,26 @@ const bookingSchema = new mongoose.Schema({
   clientId: {
     type: Number,
     required: true,
+    validate: {
+      validator: function (value) {
+        return value.toString().length === 6 && Number.isInteger(value);
+      },
+      message: "PackageId must be a 6-digit number.",
+    },
   },
-  hotelDetails: {
-    type: Object,
-    required: false,
+  startDate: {
+    type: Date,
+    required: true,
   },
-  flightDetails: {
-    type: Object,
-    required: false,
-  },
-  receiptDetails: {
-    type: Object,
-    required: false,
+  endDate: {
+    type: Date,
+    required: true,
   },
   modifiedPackagePrice: {
     type: Number,
     required: true,
   },
+  bookingDetails: [bookingDetailsSchema],
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);
