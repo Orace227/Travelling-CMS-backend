@@ -45,7 +45,6 @@ app.use(
     credentials: true,
   })
 );
-app.use(UploadDocuments.array("docImg", 10));
 app.get("/", (req, res) => {
   res.json({ massage: "Welcome to the Travelling CMS Api Server!!" });
 });
@@ -119,15 +118,21 @@ app.post("/upload", UploadBanner.single("bannerImage"), async (req, res) => {
 app.get("/BannerImg/:imageName", GetPackageImg);
 
 // update documents of booking //
-app.post("/upload-images", UploadDocuments.array("docImg", 10), (req, res) => {
-  // Handle the uploaded files here, e.g., save their paths in a database
-  const uploadedFiles = req.files;
-  console.log("lunching");
-  // Respond with a success message
-  res.json({
-    message: "Images uploaded successfully.",
-    uploadedFiles: uploadedFiles,
-  });
+app.post("/upload-images", UploadDocuments.array("docImg"), (req, res) => {
+  try {
+    // Handle the uploaded files here
+    const uploadedFilesPath = req.files;
+    console.log("Images uploaded successfully.");
+
+    // Respond with a success message
+    res.status(200).json({
+      message: "Images uploaded successfully.",
+      uploadedFilesPath: uploadedFilesPath,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 app.listen(port, () => {

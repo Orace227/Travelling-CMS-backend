@@ -1,50 +1,38 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { time } from "console";
 
+// Create a multer instance for handling file uploads
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
     try {
-      const { clientId, bookingDetails } = await req.body;
-      //   console.log("clientId:", clientId);
-      //   console.log("bookingDetails:", bookingDetails);
-
-      if (!clientId || !bookingDetails || bookingDetails.length === 0) {
+      let { clientId, key } = req.body;
+      // bookingType = JSON.parse(bookingType);
+      console.log("all keys", key);
+      if (!clientId || !key) {
         throw new Error("Invalid request body");
       }
-      const parsedBookingDetails = JSON.parse(bookingDetails);
-      // Create a set to ensure unique booking types
-      //   console.log(parsedBookingDetails);
-      //   for (let i = 0; i < parsedBookingDetails.length; i++) {
-      //     const folderPath = path.join(
-      //       "BookingDocuments",
-      //       clientId,
-      //       parsedBookingDetails[i].bookingType
-      //     );
-      parsedBookingDetails.map((bookingDetails) => {
-        const folderPath = path.join(
-          "BookingDocuments",
-          clientId,
-          bookingDetails.bookingType
-        );
+      const folderPath = path.join("BookingDocuments", clientId, key);
 
-        console.log("folderPath:", folderPath);
-
-        // Create the directory if it doesn't exist
+      // Create the directory if it doesn't exist
+      if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath, { recursive: true });
+      }
 
-        cb(null, folderPath);
-      });
+      cb(null, folderPath);
     } catch (err) {
       console.error(err);
       cb(err, null);
     }
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname); // Append bookingType at the beginning
+    cb(null, file.originalname);
   },
 });
 
-const UploadDocuments = multer({ storage });
+const UploadDocuments = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
+
 export default UploadDocuments;

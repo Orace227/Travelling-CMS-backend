@@ -9,7 +9,11 @@ const bookingDetailsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  bookingDocPath: {
+  docImgName: {
+    type: String,
+    required: true,
+  },
+  docImgPath: {
     type: String,
     required: true,
   },
