@@ -29,6 +29,10 @@ import { GetPackageImg } from "./GetPackageImg.js";
 import { GetBookingsById } from "./booking/GetBookingsById.js";
 import UploadDocuments from "./MiddleWares/UploadDocuments.js";
 import { GetUploadedDocuments } from "./GetUploadedDocuments.js";
+import { CreateCountry } from "./Country/CreateCountry.js";
+import { GetCountries } from "./Country/GetCountries.js";
+import { UpdateCountry } from "./Country/UpdateCountry.js";
+import { DeleteCountry } from "./Country/DeleteCountry.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -137,6 +141,12 @@ app.post("/upload-images", UploadDocuments.array("docImg"), (req, res) => {
 });
 
 app.get("/BookingDocuments/:clientId/:bookingType/:img", GetUploadedDocuments);
+
+// add countries //
+app.post("/CreateCountry", CreateCountry);
+app.get("/GetCountries", GetCountries);
+app.post("/UpdateCountry", UpdateCountry);
+app.post("/DeleteCountry", DeleteCountry);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
