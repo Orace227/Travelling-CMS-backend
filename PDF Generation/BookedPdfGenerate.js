@@ -1,22 +1,23 @@
 import Package from "../schemas/Package.js";
 import Client from "../schemas/Client.js";
-import Document from "../schemas/Documents.js";
 import Booking from "../schemas/Booking.js";
-import FamilyMember from "../schemas/FamilyMembers.js";
 import PDFdocument from "pdfkit";
 import fs from "fs";
 import path from "path";
-import pdfThumbnail from "pdf-thumbnail";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const BookedPdfGenerator = async (req, res) => {
   try {
+    console.log(__dirname);
     const { clientId, packageId, bookingId } = req.query;
+    console.log({ clientId, packageId, bookingId });
 
-    const imagePath = path.join(
-      "C:\\Users\\gklib\\OneDrive\\Documents\\Projects\\Travelling CMS\\backend\\Assests",
-      "banner.jpg"
-    );
-    const imageBuffer = fs.readFileSync(imagePath);
+    // const imagePath = path.join(
+    //   "C:\\Users\\gklib\\OneDrive\\Documents\\Projects\\Travelling CMS\\backend\\Assests",
+    //   "banner.jpg"
+    // );
 
     // * Fetch data from the database for package details
     const packageData = await Package.findOne({ PackageId: packageId });
@@ -24,20 +25,25 @@ export const BookedPdfGenerator = async (req, res) => {
     // * Fetch data from the database for client details
     const client = await Client.findOne({ clientId });
 
-    const familyData = await FamilyMember.find({
-      clientId,
-    });
+    // const familyData = await FamilyMember.find({
+    //   clientId,
+    // });
     // * Fetch data from the database for booking details
     const booking = await Booking.findOne({ bookingId });
 
     console.log({
       client,
-      familyData,
-      booking,
-      hotelDetails: booking.hotelDetails,
-      flightDetails: booking.flightDetails,
+      packageData,
+      booking: booking.bookingDetails,
+      // hotelDetails: booking.hotelDetails,
+      // flightDetails: booking.flightDetails,
     });
 
+    const basePath = path.join(__dirname, ".."); // Go up one directory from the current __dirname
+    // console.log(basePath);
+
+    const imagePath = path.join(basePath, packageData.packageImgPath);
+    const imageBuffer = fs.readFileSync(imagePath);
     // Create a new PDF document using pdfkit
     const doc = new PDFdocument();
 
@@ -60,6 +66,7 @@ export const BookedPdfGenerator = async (req, res) => {
     doc.image(imageBuffer, {
       fit: [470, 300], // Set the width and height of the image
     });
+
     doc.fontSize(16).text(`  `);
     doc.fontSize(20).text(`    Tour Details:`);
     for (let i = 0; i < packageData.packageBody.tourDetails.length; i++) {
@@ -82,7 +89,7 @@ export const BookedPdfGenerator = async (req, res) => {
     doc.fontSize(10).text(`  `);
     for (
       let i = 0;
-      i < packageData.packageBody.inclusionsAndExclusions.exclusions.length;
+      i < packageData.packageBody.inclusionsAndExclusions.inclusions.length;
       i++
     ) {
       doc.fontSize(14)
@@ -108,16 +115,25 @@ export const BookedPdfGenerator = async (req, res) => {
     doc.fontSize(20).text(`  `);
     doc.fontSize(20).text(`    Terms And Conditions:`);
     doc.fontSize(10).text(`  `);
-    doc.fontSize(18).text(`          Terms:`);
+    const titleX = 120; // Customize the X-coordinate as needed
+    doc.fontSize(18).text("Terms:", titleX, doc.y);
     doc.fontSize(10).text(`  `);
     for (
       let i = 0;
       i < packageData.packageBody.termsAndConditions.terms.length;
       i++
     ) {
-      doc.fontSize(14)
-        .text(`                   * ${packageData.packageBody.termsAndConditions.terms[i]}
-    `);
+      doc
+        .fontSize(14)
+        .text(
+          `         ${i + 1}. ${
+            packageData.packageBody.termsAndConditions.terms[i]
+          }`,
+          {
+            align: "justify",
+          }
+        );
+      doc.fontSize(10).text(`  `);
     }
     doc.fontSize(18).text(`          Conditions:`);
 
@@ -146,83 +162,86 @@ export const BookedPdfGenerator = async (req, res) => {
       .fontSize(16)
       .text(`          Name: ${client.firstName} ${client.lastName}`);
 
-    //////////////////// * ADDED Booking details in the pdf document //////////////////////////////////////////
+    // //////////////////// * ADDED Booking details in the pdf document //////////////////////////////////////////
 
     doc.fontSize(20).text(`  `);
     doc.fontSize(20).text(`     Booking Details:`);
     doc.fontSize(10).text(`  `);
-    doc.fontSize(18).text(`          Hotel Details:`);
-    doc.fontSize(10).text(`  `);
 
-    for (let i = 0; i < booking.hotelDetails.length; i++) {
+    for (let i = 0; i < booking.bookingDetails.length; i++) {
+      doc
+        .fontSize(18)
+        .text(`          ${booking.bookingDetails[i].bookingType} Details:`);
+      doc.fontSize(10).text(`  `);
       doc
         .fontSize(16)
         .text(
-          `            ${i + 1}.  Hotel Name: ${
-            booking.hotelDetails[i].hotelName
-          }`
+          `            ${i + 1}.  ${
+            booking.bookingDetails[i].bookingType
+          } Name: ${booking.bookingDetails[0].bookingName}`
         );
       doc.fontSize(12).text(`  `);
-
-      doc
-        .fontSize(14)
-        .text(
-          `                      * Check In Date: ${booking.hotelDetails[i].checkInDate}`
-        );
-      doc.fontSize(12).text(`  `);
-      doc
-        .fontSize(14)
-        .text(
-          `                      * Check Out Date: ${booking.hotelDetails[i].checkOutDate}`
-        );
-      doc.fontSize(12).text(`  `);
-      doc
-        .fontSize(14)
-        .text(`                      * Document: <LINK OF THE FILE>`);
+      let link = `http://localhost:7000/${booking.bookingDetails[i].docImgPath}`;
+      console.log(`document link(${i}):`, link);
+      const buttonText = `Open Link`;
+      const text = `                     * Document for ${booking.bookingDetails[i].bookingName}: ${buttonText}`;
+      doc.fontSize(14).text(text, { link: link, continued: false });
       doc.fontSize(12).text(`  `);
     }
 
-    doc.fontSize(20).text(`  `);
-    doc.fontSize(18).text(`          Flight Details:`);
-    doc.fontSize(18).text(`  `);
+    //   doc
+    //     .fontSize(14)
+    //     .text(
+    //       `                      * Check Out Date: ${booking.hotelDetails[i].checkOutDate}`
+    //     );
+    //   doc.fontSize(12).text(`  `);
+    //   doc
+    //     .fontSize(14)
+    //     .text(`                      * Document: <LINK OF THE FILE>`);
+    //   doc.fontSize(12).text(`  `);
+    // }
 
-    for (let i = 0; i < booking.flightDetails.length; i++) {
-      doc
-        .fontSize(16)
-        .text(
-          `            ${i + 1}.  Airline Name: ${
-            booking.flightDetails[i].airline
-          }`
-        );
-      doc.fontSize(12).text(`  `);
+    // doc.fontSize(20).text(`  `);
+    // doc.fontSize(18).text(`          Flight Details:`);
+    // doc.fontSize(18).text(`  `);
 
-      doc
-        .fontSize(14)
-        .text(
-          `                      * Departure Date: ${booking.flightDetails[i].departureDate}`
-        );
-      doc.fontSize(12).text(`  `);
-      doc
-        .fontSize(14)
-        .text(
-          `                      * Return Date: ${booking.flightDetails[i].returnDate}`
-        );
-      doc.fontSize(12).text(`  `);
-      doc
-        .fontSize(14)
-        .text(`                      * Document: <LINK OF THE FILE>`);
-      doc.fontSize(12).text(`  `);
-    }
-    doc.fontSize(10).text(`  `);
-    doc.fontSize(18).text(`          Receipt Details:`);
-    doc.fontSize(10).text(`  `);
+    // for (let i = 0; i < booking.flightDetails.length; i++) {
+    //   doc
+    //     .fontSize(16)
+    //     .text(
+    //       `            ${i + 1}.  Airline Name: ${
+    //         booking.flightDetails[i].airline
+    //       }`
+    //     );
+    //   doc.fontSize(12).text(`  `);
 
-    doc
-      .fontSize(16)
-      .text(
-        `              Payment Method: ${booking.receiptDetails.paymentMethod}`
-      );
-    doc.fontSize(12).text(`  `);
+    //   doc
+    //     .fontSize(14)
+    //     .text(
+    //       `                      * Departure Date: ${booking.flightDetails[i].departureDate}`
+    //     );
+    //   doc.fontSize(12).text(`  `);
+    //   doc
+    //     .fontSize(14)
+    //     .text(
+    //       `                      * Return Date: ${booking.flightDetails[i].returnDate}`
+    //     );
+    //   doc.fontSize(12).text(`  `);
+    //   doc
+    //     .fontSize(14)
+    //     .text(`                      * Document: <LINK OF THE FILE>`);
+    //   doc.fontSize(12).text(`  `);
+    // }
+    // doc.fontSize(10).text(`  `);
+    // doc.fontSize(18).text(`          Receipt Details:`);
+    // doc.fontSize(10).text(`  `);
+
+    // doc
+    //   .fontSize(16)
+    //   .text(
+    //     `              Payment Method: ${booking.receiptDetails.paymentMethod}`
+    //   );
+    // doc.fontSize(12).text(`  `);
 
     // Add more content as needed
 

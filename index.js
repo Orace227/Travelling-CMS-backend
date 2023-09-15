@@ -28,6 +28,7 @@ import { BookedPdfGenerator } from "./PDF Generation/BookedPdfGenerate.js";
 import { GetPackageImg } from "./GetPackageImg.js";
 import { GetBookingsById } from "./booking/GetBookingsById.js";
 import UploadDocuments from "./MiddleWares/UploadDocuments.js";
+import { GetUploadedDocuments } from "./GetUploadedDocuments.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -134,6 +135,8 @@ app.post("/upload-images", UploadDocuments.array("docImg"), (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+app.get("/BookingDocuments/:clientId/:bookingType/:img", GetUploadedDocuments);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
