@@ -48,7 +48,7 @@ const bookingSchema = new mongoose.Schema({
       validator: function (value) {
         return value.toString().length === 6 && Number.isInteger(value);
       },
-      message: "PackageId must be a 6-digit number.",
+      message: "ClientId must be a 6-digit number.",
     },
   },
   startDate: {
