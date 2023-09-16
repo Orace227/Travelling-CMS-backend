@@ -2,11 +2,11 @@ import Country from "../schemas/Country.js";
 
 export const UpdateCountry = async (req, res) => {
   try {
-    const { countryId, countryName } = req.body;
+    const { countryId, countryName, continent } = req.body;
     // console.log({ countryId, countryName, reqBody: req.body });
     const UpdatedCountry = await Country.updateOne(
       { countryId },
-      { countryName }
+      { countryName, continent }
     );
     if (UpdatedCountry) {
       // console.log(UpdatedCountry);

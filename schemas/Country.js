@@ -10,6 +10,10 @@ const CountrySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  continent: {
+    type: String,
+    required: true,
+  },
 });
 
 const Country = mongoose.model("Country", CountrySchema);
