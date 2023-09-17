@@ -9,6 +9,14 @@ const bookingDetailsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
+  vandor: {
+    type: String,
+    required: true,
+  },
   docImgName: {
     type: String,
     required: true,
@@ -50,6 +58,11 @@ const bookingSchema = new mongoose.Schema({
       },
       message: "ClientId must be a 6-digit number.",
     },
+  },
+
+  totalCost: {
+    type: Number,
+    required: true,
   },
   startDate: {
     type: Date,
