@@ -2,12 +2,20 @@ import Country from "../schemas/Country.js";
 
 export const CreateCountry = async (req, res) => {
   try {
-    const { countryName, countryId, continent } = req.body;
+    const {
+      countryName,
+      countryId,
+      continent,
+      countryImgName,
+      countryImgPath,
+    } = req.body;
     console.log(countryName);
     const CreateCountry = await Country.create({
       countryId,
       countryName,
       continent,
+      countryImgName,
+      countryImgPath,
     });
     if (CreateCountry) {
       res.status(200).json({ countryId, countryName, continent });

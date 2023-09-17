@@ -14,6 +14,14 @@ const CountrySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  countryImgName: {
+    type: String,
+    required: true,
+  },
+  countryImgPath: {
+    type: String,
+    required: true,
+  },
 });
 
 const Country = mongoose.model("Country", CountrySchema);

@@ -33,6 +33,8 @@ import { CreateCountry } from "./Country/CreateCountry.js";
 import { GetCountries } from "./Country/GetCountries.js";
 import { UpdateCountry } from "./Country/UpdateCountry.js";
 import { DeleteCountry } from "./Country/DeleteCountry.js";
+import UploadCountryImg from "./MiddleWares/UploadCountryImg.js";
+import { GetCountryImg } from "./GetCountryImg.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -148,6 +150,18 @@ app.post("/CreateCountry", CreateCountry);
 app.get("/GetCountries", GetCountries);
 app.post("/UpdateCountry", UpdateCountry);
 app.post("/DeleteCountry", DeleteCountry);
+
+app.post(
+  "/uploadCountryImg",
+  UploadCountryImg.single("countryImg"),
+  async (req, res) => {
+    const packageImgPath = req.file.path;
+
+    res.json({ message: "Image uploaded successfully", path: packageImgPath });
+  }
+);
+
+app.get("/CountryImg/:imageName", GetCountryImg);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
