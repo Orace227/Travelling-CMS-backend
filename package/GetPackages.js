@@ -2,7 +2,7 @@ import Package from "../schemas/Package.js";
 
 export const GetPackages = async (req, res) => {
   try {
-    const { packageType, country, continent } = await req.query;
+    const { packageType, country, continent, PackageId } = await req.query;
     const query = {};
 
     if (packageType) {
@@ -17,7 +17,11 @@ export const GetPackages = async (req, res) => {
       query.continent = continent;
     }
 
-    const allPackages = await Package.find(query, "-packagePrice");
+    if (PackageId) {
+      query.PackageId = PackageId;
+    }
+
+    const allPackages = await Package.find(query);
     res.status(200).json({ allPackages });
   } catch (err) {
     res.status(500).json({ error: err.message });
