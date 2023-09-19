@@ -35,6 +35,7 @@ import { UpdateCountry } from "./Country/UpdateCountry.js";
 import { DeleteCountry } from "./Country/DeleteCountry.js";
 import UploadCountryImg from "./MiddleWares/UploadCountryImg.js";
 import { GetCountryImg } from "./GetCountryImg.js";
+import { GetClienById } from "./client/GetClientById.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -89,6 +90,7 @@ app.post("/createClient", CreateClient);
 
 // get client //
 app.get("/getClients", GetClients);
+app.get("/getClientsById", GetClienById);
 
 // update client //
 app.post("/updateClient", UpdateClient);
