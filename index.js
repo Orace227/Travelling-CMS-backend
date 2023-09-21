@@ -49,7 +49,7 @@ app.use(express.json());
 app.use(
   cors({
     // origin: [process.env.CLIENT_URL_1, process.env.CLIENT_URL_2],
-    origin: [process.env.CLIENT_URL],
+    origin: [process.env.CLIENT_URL_1, process.env.CLIENT_URL_2],
     methods: ["GET", "POST", "UPDATE", "DELETE"],
     credentials: true,
   })

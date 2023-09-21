@@ -5,7 +5,7 @@ const storage = multer.diskStorage({
     cb(null, "BannerImg/"); // Store files in the 'uploads' directory
   },
   filename: async (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname); // Rename the file
+    cb(null, Date.now() + "-" + file.originalname.replace(/\s+/g, "")); // Rename the file
   },
 });
 
