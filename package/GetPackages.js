@@ -2,7 +2,8 @@ import Package from "../schemas/Package.js";
 
 export const GetPackages = async (req, res) => {
   try {
-    const { packageType, country, continent, PackageId } = await req.query;
+    let { packageType, country, continent, PackageId, isLive } =
+      await req.query;
     const query = {};
 
     if (packageType) {
@@ -19,6 +20,10 @@ export const GetPackages = async (req, res) => {
 
     if (PackageId) {
       query.PackageId = PackageId;
+    }
+
+    if (isLive) {
+      query.isLive = isLive;
     }
 
     const allPackages = await Package.find(query);
