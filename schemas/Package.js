@@ -1,12 +1,5 @@
 import mongoose from "mongoose";
 
-// Schema for tour details (day-wise)
-const tourDetailsSchema = new mongoose.Schema({
-  day: Number,
-  title: String,
-  description: String,
-});
-
 // Schema for inclusions and exclusions
 const inclusionsExclusionsSchema = new mongoose.Schema({
   inclusions: [String],
@@ -21,7 +14,7 @@ const termsConditionsSchema = new mongoose.Schema({
 
 // Schema for the entire package body
 const packageBodySchema = new mongoose.Schema({
-  tourDetails: [tourDetailsSchema],
+  tourDetails: [],
   inclusionsAndExclusions: inclusionsExclusionsSchema,
   termsAndConditions: termsConditionsSchema,
 });

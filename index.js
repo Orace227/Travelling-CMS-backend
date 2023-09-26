@@ -36,6 +36,9 @@ import { DeleteCountry } from "./Country/DeleteCountry.js";
 import UploadCountryImg from "./MiddleWares/UploadCountryImg.js";
 import { GetCountryImg } from "./GetCountryImg.js";
 import { GetClienById } from "./client/GetClientById.js";
+import { CreateInquiry } from "./Inquiry/CreateInquiry.js";
+import { GetInquiries } from "./Inquiry/GetInquiry.js";
+import { DeleteInquiry } from "./Inquiry/DeleteInquiry.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -164,6 +167,10 @@ app.post(
 );
 
 app.get("/CountryImg/:imageName", GetCountryImg);
+
+app.post("/CreateInquiry", CreateInquiry);
+app.get("/GetInquiry", GetInquiries);
+app.post("/DeleteInquiry", DeleteInquiry);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
