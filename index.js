@@ -39,6 +39,7 @@ import { GetClienById } from "./client/GetClientById.js";
 import { CreateInquiry } from "./Inquiry/CreateInquiry.js";
 import { GetInquiries } from "./Inquiry/GetInquiry.js";
 import { DeleteInquiry } from "./Inquiry/DeleteInquiry.js";
+import { ReadInquiry } from "./Inquiry/GetInquiryById.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -171,6 +172,7 @@ app.get("/CountryImg/:imageName", GetCountryImg);
 app.post("/CreateInquiry", CreateInquiry);
 app.get("/GetInquiry", GetInquiries);
 app.post("/DeleteInquiry", DeleteInquiry);
+app.get("/ReadInquiry", ReadInquiry);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
