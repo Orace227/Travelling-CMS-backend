@@ -40,6 +40,7 @@ import { CreateInquiry } from "./Inquiry/CreateInquiry.js";
 import { GetInquiries } from "./Inquiry/GetInquiry.js";
 import { DeleteInquiry } from "./Inquiry/DeleteInquiry.js";
 import { ReadInquiry } from "./Inquiry/GetInquiryById.js";
+import { UpdateInquiry } from "./Inquiry/UpdateInquiry.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -125,7 +126,9 @@ app.post("/deleteBooking", DeleteBooking);
 app.post("/upload", UploadBanner.single("bannerImage"), async (req, res) => {
   const packageImgPath = req.file.path;
 
-  res.json({ message: "Image uploaded successfully", path: packageImgPath });
+  res
+    .status(200)
+    .json({ message: "Image uploaded successfully", path: packageImgPath });
 });
 
 // get banner images //
@@ -173,6 +176,7 @@ app.post("/CreateInquiry", CreateInquiry);
 app.get("/GetInquiry", GetInquiries);
 app.post("/DeleteInquiry", DeleteInquiry);
 app.get("/ReadInquiry", ReadInquiry);
+app.post("/UpdateInquiry", UpdateInquiry);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);

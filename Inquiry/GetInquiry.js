@@ -1,8 +1,9 @@
 import TravelInquiry from "../schemas/Inquiry.js";
 
 export const GetInquiries = async (req, res) => {
+  const { isConfirm } = req.query;
   try {
-    const allInquiries = await TravelInquiry.find({});
+    const allInquiries = await TravelInquiry.find({ isConfirm });
     if (allInquiries) {
       res.status(200).json({ allInquiries });
     } else {

@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const travelInquirySchema = new mongoose.Schema({
+  packageId: {
+    type: String,
+    required: true,
+  },
   fullName: {
     type: String,
     required: true,
@@ -39,6 +43,10 @@ const travelInquirySchema = new mongoose.Schema({
   },
   message: {
     type: String,
+  },
+  isConfirm: {
+    type: Boolean,
+    default: false,
   },
 });
 
