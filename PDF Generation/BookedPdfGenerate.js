@@ -23,130 +23,137 @@ export const BookedPdfGenerator = async (req, res) => {
       booking124: booking,
       booking: booking.bookingDetails,
     });
-    const basePath = path.join(__dirname, "..");
-    const imagePath = path.join(basePath, packageData.packageImgPath);
-    const imageBuffer = fs.readFileSync(imagePath);
-
-    const doc = new PDFDocument({
-      size: "letter",
-      margin: 50,
-    });
-
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader(
-      "Content-Disposition",
-      `inline; filename="${packageData.packageName}.pdf"`
-    );
-
-    // Set precise margins for the entire page
-    const margin = 30;
-    doc.page.margins = {
-      top: margin,
-      bottom: margin,
-      left: margin,
-      right: margin,
-    };
-
-    doc.pipe(res);
-    // Add package name with formatting and justification
-    doc.fontSize(30).text(packageData.packageName, {
-      align: "center",
-      margin: { top: 5, bottom: 20 },
-      align: "justify",
-    });
-    // Set the image width to cover the full width of the PDF page
-    doc.image(imageBuffer, {
-      fit: [500, 300], // Use pdfPageWidth as the width here
-      align: "left",
-    });
-    doc.fontSize(20).text(`  `);
-
-    // Add tour details
-    await addHtmlSection(
-      doc,
-      "Tour Details",
-      packageData.packageBody.tourDetails
-    );
-
-    doc.fontSize(20).text(`  `);
-
-    // Add inclusions and exclusions
-    addSection(
-      doc,
-      "Inclusions",
-      packageData.packageBody.inclusionsAndExclusions.inclusions
-    );
-
-    doc.fontSize(20).text(`  `);
-
-    addSection(
-      doc,
-      "Exclusions",
-      packageData.packageBody.inclusionsAndExclusions.exclusions
-    );
-
-    doc.fontSize(20).text(`  `);
-
-    // Add terms and conditions
-    addSection(doc, "Terms", packageData.packageBody.termsAndConditions.terms);
-
-    doc.fontSize(20).text(`  `);
-
-    addSection(
-      doc,
-      "Conditions",
-      packageData.packageBody.termsAndConditions.conditions
-    );
-
-    doc.fontSize(20).text(`  `);
-
-    // Add package price if it's not live
-    if (!packageData.isLive) {
-      doc.fontSize(18).text(`Package Price: ${booking.modifiedPackagePrice}`, {
-        align: "center",
-        margin: { top: 20, bottom: 20 },
-        align: "justify",
+    if (packageData && packageData.packageImgPath) {
+      const basePath = path.join(__dirname, "..");
+      const imagePath = path.join(basePath, packageData.packageImgPath);
+      const imageBuffer = fs.readFileSync(imagePath);
+      const doc = new PDFDocument({
+        size: "letter",
+        margin: 50,
       });
-    }
 
-    doc.fontSize(20).text(`   `);
-    doc.fontSize(20).text(`Client Details:`);
-    doc.fontSize(10).text(`   `);
-    doc
-      .fontSize(16)
-      .text(`    Client Name: ${client.firstName} ${client.lastName}`, {
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        `inline; filename="${packageData.packageName}.pdf"`
+      );
+
+      // Set precise margins for the entire page
+      const margin = 30;
+      doc.page.margins = {
+        top: margin,
+        bottom: margin,
+        left: margin,
+        right: margin,
+      };
+
+      doc.pipe(res);
+      // Add package name with formatting and justification
+      doc.fontSize(30).text(packageData.packageName, {
+        align: "center",
         margin: { top: 5, bottom: 20 },
         align: "justify",
       });
+      // Set the image width to cover the full width of the PDF page
+      doc.image(imageBuffer, {
+        fit: [500, 300], // Use pdfPageWidth as the width here
+        align: "left",
+      });
+      doc.fontSize(20).text(`  `);
 
-    doc.fontSize(20).text(`   `);
-    doc.fontSize(20).text(`Booking Details:`);
-    doc.fontSize(10).text(`   `);
+      // Add tour details
+      await addHtmlSection(
+        doc,
+        "Tour Details",
+        packageData.packageBody.tourDetails
+      );
 
-    for (let i = 0; i < booking.bookingDetails.length; i++) {
+      doc.fontSize(20).text(`  `);
+
+      // Add inclusions and exclusions
+      addSection(
+        doc,
+        "Inclusions",
+        packageData.packageBody.inclusionsAndExclusions.inclusions
+      );
+
+      doc.fontSize(20).text(`  `);
+
+      addSection(
+        doc,
+        "Exclusions",
+        packageData.packageBody.inclusionsAndExclusions.exclusions
+      );
+
+      doc.fontSize(20).text(`  `);
+
+      // Add terms and conditions
+      addSection(
+        doc,
+        "Terms",
+        packageData.packageBody.termsAndConditions.terms
+      );
+
+      doc.fontSize(20).text(`  `);
+
+      addSection(
+        doc,
+        "Conditions",
+        packageData.packageBody.termsAndConditions.conditions
+      );
+
+      doc.fontSize(20).text(`  `);
+
+      // Add package price if it's not live
+      if (!packageData.isLive) {
+        doc
+          .fontSize(18)
+          .text(`Package Price: ${booking.modifiedPackagePrice}`, {
+            align: "center",
+            margin: { top: 20, bottom: 20 },
+            align: "justify",
+          });
+      }
+
+      doc.fontSize(20).text(`   `);
+      doc.fontSize(20).text(`Client Details:`);
+      doc.fontSize(10).text(`   `);
       doc
         .fontSize(16)
-        .text(
-          `    ${i + 1}. booking Name: ${
-            booking.bookingDetails[i].bookingName
-          }`,
-          {
-            align: "left",
-            margin: { top: 5, bottom: 20 },
-            align: "justify",
-          }
-        );
+        .text(`    Client Name: ${client.firstName} ${client.lastName}`, {
+          margin: { top: 5, bottom: 20 },
+          align: "justify",
+        });
+
+      doc.fontSize(20).text(`   `);
+      doc.fontSize(20).text(`Booking Details:`);
       doc.fontSize(10).text(`   `);
 
-      let link = `${process.env.link}${booking.bookingDetails[i].docImgPath}`;
-      // console.log(`document link(${i}):`, link);
+      for (let i = 0; i < booking.bookingDetails.length; i++) {
+        doc
+          .fontSize(16)
+          .text(
+            `    ${i + 1}. booking Name: ${
+              booking.bookingDetails[i].bookingName
+            }`,
+            {
+              align: "left",
+              margin: { top: 5, bottom: 20 },
+              align: "justify",
+            }
+          );
+        doc.fontSize(10).text(`   `);
 
-      const buttonText = `Open Link`;
-      const text = `               * Document for ${booking.bookingDetails[i].bookingName}: ${buttonText}`;
-      doc.fontSize(14).text(text, { link: link, continued: false });
-      doc.fontSize(12).text(`  `);
+        let link = `${process.env.link}${booking.bookingDetails[i].docImgPath}`;
+        // console.log(`document link(${i}):`, link);
+
+        const buttonText = `Open Link`;
+        const text = `               * Document for ${booking.bookingDetails[i].bookingName}: ${buttonText}`;
+        doc.fontSize(14).text(text, { link: link, continued: false });
+        doc.fontSize(12).text(`  `);
+      }
+      doc.end();
     }
-    doc.end();
   } catch (error) {
     console.error("Error generating PDF:", error);
     res.status(500).json({ error: "Error generating PDF" });
