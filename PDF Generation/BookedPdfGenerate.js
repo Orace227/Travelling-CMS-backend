@@ -25,7 +25,7 @@ export const BookedPdfGenerator = async (req, res) => {
     });
     if (packageData && packageData.packageImgPath) {
       const basePath = path.join(__dirname, "..");
-      const imagePath = path.join(basePath, packageData?.packageImgPath);
+      let imagePath = path.join(basePath, packageData?.packageImgPath);
 
       imagePath = imagePath.replace("\\", "/");
       console.log("newImgpath: " + imagePath);
