@@ -17,16 +17,17 @@ export const BookedPdfGenerator = async (req, res) => {
     const packageData = await Package.findOne({ PackageId: packageId });
     const client = await Client.findOne({ clientId });
     const booking = await Booking.findOne({ bookingId });
-    console.log({
-      packageData,
-      client,
-      booking124: booking,
-      booking: booking.bookingDetails,
-    });
+    // console.log({
+    //   packageData,
+    //   client,
+    //   booking124: booking,
+    //   booking: booking.bookingDetails,
+    // });
     if (packageData && packageData.packageImgPath) {
       const basePath = path.join(__dirname, "..");
       const imagePath = path.join(basePath, packageData.packageImgPath);
       const imageBuffer = fs.readFileSync(imagePath);
+      console.log({ basePath, imagePath, imageBuffer });
       const doc = new PDFDocument({
         size: "letter",
         margin: 50,
