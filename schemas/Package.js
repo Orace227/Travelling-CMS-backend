@@ -50,12 +50,14 @@ const packageSchema = new mongoose.Schema({
       "Wildlife Drives",
       "Sustainable paths",
       "Cruise Vacations",
+      "Leisure",
     ],
     required: true,
   },
   packageImgPath: String,
   country: String,
   continent: String,
+  isShown: Boolean,
   packageBody: packageBodySchema,
 });
 

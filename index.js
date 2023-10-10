@@ -178,6 +178,9 @@ app.post("/DeleteInquiry", DeleteInquiry);
 app.get("/ReadInquiry", ReadInquiry);
 app.post("/UpdateInquiry", UpdateInquiry);
 
+
+
+
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
 });
