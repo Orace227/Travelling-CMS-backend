@@ -41,6 +41,7 @@ import { GetInquiries } from "./Inquiry/GetInquiry.js";
 import { DeleteInquiry } from "./Inquiry/DeleteInquiry.js";
 import { ReadInquiry } from "./Inquiry/GetInquiryById.js";
 import { UpdateInquiry } from "./Inquiry/UpdateInquiry.js";
+import { deleteImage } from "./DeleteBanner.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -131,6 +132,25 @@ app.post("/upload", UploadBanner.single("bannerImage"), async (req, res) => {
     .json({ message: "Image uploaded successfully", path: packageImgPath });
 });
 
+app.post("/deleteBanner", async (req, res) => {
+  try {
+    const { filename } = req.body; // Assuming you send the filename in the request body
+
+    if (!filename) {
+      return res
+        .status(400)
+        .json({ error: "Filename is required in the request body" });
+    }
+
+    await deleteImage(filename);
+
+    res.status(200).json({ message: "Banner image deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting banner image:", error);
+    res.status(500).json({ error: "Failed to delete banner image" });
+  }
+});
+
 // get banner images //
 app.get("/BannerImg/:imageName", GetPackageImg);
 
@@ -177,9 +197,6 @@ app.get("/GetInquiry", GetInquiries);
 app.post("/DeleteInquiry", DeleteInquiry);
 app.get("/ReadInquiry", ReadInquiry);
 app.post("/UpdateInquiry", UpdateInquiry);
-
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
