@@ -5,7 +5,24 @@ const loyaltySchema = new mongoose.Schema({
   type: String, // e.g., "Frequent Flyer" or "Hotel Loyalty"
   number: String,
 });
-
+const bookingDetailsSchema = new mongoose.Schema({
+  bookingType: {
+    type: String,
+    required: true,
+  },
+  bookingName: {
+    type: String,
+    required: true,
+  },
+  docImgName: {
+    type: String,
+    required: true,
+  },
+  docImgPath: {
+    type: String,
+    required: true,
+  },
+});
 
 const clientSchema = new mongoose.Schema({
   clientId: {
@@ -21,7 +38,7 @@ const clientSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  
+
   firstName: {
     type: String,
     required: true,
@@ -69,6 +86,7 @@ const clientSchema = new mongoose.Schema({
   companyName: String,
   companyGSTNumber: String,
   companyGSTEmail: String,
+  bookingDetails: [bookingDetailsSchema],
 });
 
 const Client = mongoose.model("Client", clientSchema);

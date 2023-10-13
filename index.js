@@ -42,6 +42,7 @@ import { DeleteInquiry } from "./Inquiry/DeleteInquiry.js";
 import { ReadInquiry } from "./Inquiry/GetInquiryById.js";
 import { UpdateInquiry } from "./Inquiry/UpdateInquiry.js";
 import { deleteImage } from "./DeleteBanner.js";
+import UploadCommonDoc from "./MiddleWares/UploadCommonDoc.js";
 dotenvConfig();
 
 // here all varables are defined
@@ -173,6 +174,23 @@ app.post("/upload-images", UploadDocuments.array("docImg"), (req, res) => {
 });
 
 app.get("/BookingDocuments/:clientId/:bookingType/:img", GetUploadedDocuments);
+
+app.post("/upload-common-doc", UploadCommonDoc.array("docImg"), (req, res) => {
+  try {
+    // Handle the uploaded files here
+    const uploadedFilesPath = req.files;
+    console.log("Images uploaded successfully.");
+
+    // Respond with a success message
+    res.status(200).json({
+      message: "Images uploaded successfully.",
+      uploadedFilesPath: uploadedFilesPath,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 // add countries //
 app.post("/CreateCountry", CreateCountry);
