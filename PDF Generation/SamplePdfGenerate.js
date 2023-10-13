@@ -20,7 +20,7 @@ export const SamplePdfGenerator = async (req, res) => {
 
     // Calculate the width of the PDF page
     const doc = new PDFDocument();
-
+    // doc.document.length = 100;
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
@@ -155,15 +155,14 @@ export const SamplePdfGenerator = async (req, res) => {
 
     addSection(doc, packageData.packageBody.inclusionsAndExclusions.inclusions);
 
-    // doc.fontSize(50).text(`  `);
+    doc.fontSize(20).text(`  `);
 
-    doc.addPage();
+    const lineLength = 500; // Adjust the desired length
     doc
       .strokeColor("#183b83")
       .lineWidth(30)
-
-      .moveTo(doc.page.margins.left, doc.y) // Start from the current vertical position
-      .lineTo(doc.page.width - doc.page.margins.right, doc.y) // End at the right margin
+      .moveTo(doc.page.margins.left, doc.y) // Start from the left margin
+      .lineTo(doc.page.margins.left + lineLength, doc.y) // Extend the line to the right
       .stroke();
 
     // Add the "Inclusions" section title
