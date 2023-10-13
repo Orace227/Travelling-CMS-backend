@@ -6,6 +6,24 @@ const loyaltySchema = new mongoose.Schema({
   number: String,
 });
 
+const bookingDetailsSchema = new mongoose.Schema({
+  bookingType: {
+    type: String,
+    required: true,
+  },
+  bookingName: {
+    type: String,
+    required: true,
+  },
+  docImgName: {
+    type: String,
+    required: true,
+  },
+  docImgPath: {
+    type: String,
+    required: true,
+  },
+});
 const familyMemberSchema = new mongoose.Schema({
   FamilyMemberId: {
     type: Number,
@@ -74,6 +92,7 @@ const familyMemberSchema = new mongoose.Schema({
   },
   frequentFlyerNumbers: [loyaltySchema], // Array of frequent flyer numbers
   hotelLoyaltyNumbers: [loyaltySchema], // Array of hotel loyalty numbers
+  bookingDetails: [bookingDetailsSchema],
 });
 
 const FamilyMember = mongoose.model("FamilyMember", familyMemberSchema);
