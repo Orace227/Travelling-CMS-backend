@@ -26,12 +26,12 @@ export const BookedPdfGenerator = async (req, res) => {
     });
     if (packageData && packageData.packageImgPath) {
       const basePath = path.join(__dirname, "..");
-      let imagePath = path.join(basePath, packageData?.packageImgPath);
+      // let imagePath = path.join(basePath, packageData?.packageImgPath);
 
-      imagePath = imagePath.replace("\\", "/");
-      console.log("newImgpath: " + imagePath);
-      const imageBuffer = fs.readFileSync(imagePath);
-      console.log({ basePath, imagePath, imageBuffer });
+      // imagePath = imagePath.replace("\\", "/");
+      // console.log("newImgpath: " + imagePath);
+      // const imageBuffer = fs.readFileSync(imagePath);
+      // console.log({ basePath, imagePath, imageBuffer });
 
       // Calculate the width of the PDF page
       const doc = new PDFDocument();
