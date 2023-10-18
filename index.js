@@ -44,7 +44,7 @@ import { UpdateInquiry } from "./Inquiry/UpdateInquiry.js";
 import { deleteImage } from "./DeleteBanner.js";
 import UploadCommonDoc from "./MiddleWares/UploadCommonDoc.js";
 import { GetUploadedCommonDoc } from "./GetUploadedCommonDoc.js";
-import UploadCommonDocs from "./MiddleWares/UploadCommonDocs.js";
+
 dotenvConfig();
 
 // here all varables are defined
