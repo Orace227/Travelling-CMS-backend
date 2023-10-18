@@ -188,11 +188,13 @@ export const BookedPdfGenerator = async (req, res) => {
       addContent("", 10); // Add spacing
 
       if (!packageData.isLive) {
-        doc.fontSize(20).text(`Package Price: ${packageData.packagePrice}`, {
-          align: "center",
-          margin: { top: 20, bottom: 20 },
-          align: "justify",
-        });
+        doc
+          .fontSize(20)
+          .text(`Package Price: ${booking.modifiedPackagePrice}`, {
+            align: "center",
+            margin: { top: 20, bottom: 20 },
+            align: "justify",
+          });
       }
       doc.addPage();
       doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
