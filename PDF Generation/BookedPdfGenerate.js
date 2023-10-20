@@ -143,7 +143,7 @@ export const BookedPdfGenerator = async (req, res) => {
         addHtmlSection(doc, packageData.packageBody.tourDetails[i].description);
         addContent("", 10); // Add spacing
       }
-
+      doc.fontSize(14).text("  ");
       doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
       doc.fillColor("white");
       addContent(`Inclusions`, 18, "center");
@@ -157,6 +157,7 @@ export const BookedPdfGenerator = async (req, res) => {
       addContent("", 10); // Add spacing
 
       // Add content of the exclusion section
+      doc.fontSize(14).text("  ");
       doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
       doc.fillColor("white");
       addContent(`Exclusions`, 18, "center");
@@ -169,6 +170,7 @@ export const BookedPdfGenerator = async (req, res) => {
       );
       addContent("", 10); // Add spacing
 
+      doc.fontSize(14).text("  ");
       doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
       doc.fillColor("white");
       addContent(`Terms`, 18, "center");
@@ -178,6 +180,7 @@ export const BookedPdfGenerator = async (req, res) => {
       addSection(doc, packageData.packageBody.termsAndConditions.terms);
       addContent("", 10); // Add spacing
 
+      doc.fontSize(14).text("  ");
       doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
       doc.fillColor("white");
       addContent(`Conditions`, 18, "center");
@@ -187,15 +190,27 @@ export const BookedPdfGenerator = async (req, res) => {
       addSection(doc, packageData.packageBody.termsAndConditions.conditions);
       addContent("", 10); // Add spacing
 
+      // if (!packageData.isLive) {
+      //   doc
+      //     .fontSize(20)
+      //     .text(`Package Price: ${booking.modifiedPackagePrice}`, {
+      //       align: "center",
+      //       margin: { top: 20, bottom: 20 },
+      //       align: "justify",
+      //     });
+      // }
       if (!packageData.isLive) {
         doc
           .fontSize(20)
+          .fillColor("#183b83") // Set the text color to blue
           .text(`Package Price: ${booking.modifiedPackagePrice}`, {
             align: "center",
             margin: { top: 20, bottom: 20 },
             align: "justify",
-          });
+          })
+          .fillColor("black"); // Reset the text color to black (or the desired default color)
       }
+
       doc.addPage();
       doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
       doc.fillColor("white");
