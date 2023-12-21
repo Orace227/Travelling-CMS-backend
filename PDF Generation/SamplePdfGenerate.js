@@ -139,7 +139,7 @@ export const SamplePdfGenerator = async (req, res) => {
 
     addContent("", 10); // Add spacing
     addSection(doc, packageData.packageBody.inclusionsAndExclusions.inclusions);
-    addContent("", 10); // Add spacing
+    // addContent("", 10); // Add spacing
 
     // Add content of the exclusion section
     doc.fontSize(14).text("  ");
@@ -150,7 +150,7 @@ export const SamplePdfGenerator = async (req, res) => {
 
     addContent("", 10); // Add spacing
     addSection(doc, packageData.packageBody.inclusionsAndExclusions.exclusions);
-    addContent("", 10); // Add spacing
+    // addContent("", 10); // Add spacing
 
     doc.fontSize(14).text("  ");
     doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
@@ -160,7 +160,7 @@ export const SamplePdfGenerator = async (req, res) => {
 
     addContent("", 10); // Add spacing
     addSection(doc, packageData.packageBody.termsAndConditions.terms);
-    addContent("", 10); // Add spacing
+    // addContent("", 10); // Add spacing
 
     doc.fontSize(14).text("  ");
     doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
@@ -170,18 +170,17 @@ export const SamplePdfGenerator = async (req, res) => {
 
     addContent("", 10); // Add spacing
     addSection(doc, packageData.packageBody.termsAndConditions.conditions);
-    addContent("", 10); // Add spacing
+    // addContent("", 10); // Add spacing
 
     if (!packageData.isLive) {
-      doc
-        .fontSize(20)
-        .fillColor("#183b83") // Set the text color to blue
-        .text(`Package Price: ${packageData.packagePrice}`, {
-          align: "center",
-          margin: { top: 20, bottom: 20 },
-          align: "justify",
-        })
-        .fillColor("black"); // Reset the text color to black (or the desired default color)
+      doc.fontSize(14).text("  ");
+      doc.fontSize(14).text("  ");
+      doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
+      doc.fillColor("white");
+      addContent(`Package Price: ${packageData.packagePrice}`, 18, "center");
+      doc.fillColor("black");
+
+      // addContent("", 10); // Add spacing
     }
 
     doc.end();
@@ -202,7 +201,7 @@ function addSection(doc, items) {
         width: 520,
         align: "justify",
       });
-      doc.fontSize(10).text(`  `);
+      // doc.fontSize(10).text(`  `);
     });
   }
 }

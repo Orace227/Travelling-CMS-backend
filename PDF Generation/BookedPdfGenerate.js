@@ -141,7 +141,7 @@ export const BookedPdfGenerator = async (req, res) => {
 
         addContent("", 10); // Add spacing
         addHtmlSection(doc, packageData.packageBody.tourDetails[i].description);
-        addContent("", 10); // Add spacing
+        // addContent("", 10); // Add spacing
       }
       doc.fontSize(14).text("  ");
       doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
@@ -154,7 +154,7 @@ export const BookedPdfGenerator = async (req, res) => {
         doc,
         packageData.packageBody.inclusionsAndExclusions.inclusions
       );
-      addContent("", 10); // Add spacing
+      // addContent("", 10); // Add spacing
 
       // Add content of the exclusion section
       doc.fontSize(14).text("  ");
@@ -168,7 +168,7 @@ export const BookedPdfGenerator = async (req, res) => {
         doc,
         packageData.packageBody.inclusionsAndExclusions.exclusions
       );
-      addContent("", 10); // Add spacing
+      // addContent("", 10); // Add spacing
 
       doc.fontSize(14).text("  ");
       doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
@@ -178,7 +178,7 @@ export const BookedPdfGenerator = async (req, res) => {
 
       addContent("", 10); // Add spacing
       addSection(doc, packageData.packageBody.termsAndConditions.terms);
-      addContent("", 10); // Add spacing
+      // addContent("", 10); // Add spacing
 
       doc.fontSize(14).text("  ");
       doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
@@ -188,7 +188,7 @@ export const BookedPdfGenerator = async (req, res) => {
 
       addContent("", 10); // Add spacing
       addSection(doc, packageData.packageBody.termsAndConditions.conditions);
-      addContent("", 10); // Add spacing
+      // addContent("", 10); // Add spacing
 
       // if (!packageData.isLive) {
       //   doc
@@ -201,6 +201,7 @@ export const BookedPdfGenerator = async (req, res) => {
       // }
       if (!packageData.isLive) {
         doc.fontSize(14).text("  ");
+        doc.fontSize(14).text("  ");
         doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
         doc.fillColor("white");
         addContent(
@@ -211,9 +212,10 @@ export const BookedPdfGenerator = async (req, res) => {
         doc.fillColor("black");
 
         addContent("", 10); // Add spacing
+        // addContent("", 10); // Add spacing
       }
 
-      doc.addPage();
+      // doc.addPage();
       doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
       doc.fillColor("white");
       addContent(`Client Details`, 18, "center");
@@ -266,7 +268,7 @@ function addSection(doc, items) {
         width: 520,
         align: "justify",
       });
-      doc.fontSize(10).text(`  `);
+      // doc.fontSize(10).text(`  `);
     });
   }
 }
