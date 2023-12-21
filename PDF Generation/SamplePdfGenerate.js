@@ -65,14 +65,14 @@ export const SamplePdfGenerator = async (req, res) => {
     const topRightY = margin;
     doc
       .fontSize(10)
-      .text("KARTIK MORE", topRightX - 120, topRightY, { align: "right" })
+
       .text("BLUE ESCAPE TRAVEL SOLUTIONS", topRightX - 250, topRightY + 15, {
         align: "right",
       })
       .text("+919909106564", topRightX - 120, topRightY + 30, {
         align: "right",
       })
-      .text("kartik@blueescape.in", topRightX - 120, topRightY + 45, {
+      .text("info@blueescape.in", topRightX - 120, topRightY + 45, {
         align: "right",
       });
 

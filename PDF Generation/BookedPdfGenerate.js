@@ -76,14 +76,14 @@ export const BookedPdfGenerator = async (req, res) => {
       const topRightY = margin;
       doc
         .fontSize(10)
-        .text("KARTIK MORE", topRightX - 120, topRightY, { align: "right" })
+
         .text("BLUE ESCAPE TRAVEL SOLUTIONS", topRightX - 250, topRightY + 15, {
           align: "right",
         })
         .text("+919909106564", topRightX - 120, topRightY + 30, {
           align: "right",
         })
-        .text("kartik@blueescape.in", topRightX - 120, topRightY + 45, {
+        .text("info@blueescape.in", topRightX - 120, topRightY + 45, {
           align: "right",
         });
 
@@ -200,15 +200,17 @@ export const BookedPdfGenerator = async (req, res) => {
       //     });
       // }
       if (!packageData.isLive) {
-        doc
-          .fontSize(20)
-          .fillColor("#183b83") // Set the text color to blue
-          .text(`Package Price: ${booking.modifiedPackagePrice}`, {
-            align: "center",
-            margin: { top: 20, bottom: 20 },
-            align: "justify",
-          })
-          .fillColor("black"); // Reset the text color to black (or the desired default color)
+        doc.fontSize(14).text("  ");
+        doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
+        doc.fillColor("white");
+        addContent(
+          `Package Price: ${booking.modifiedPackagePrice}`,
+          18,
+          "center"
+        );
+        doc.fillColor("black");
+
+        addContent("", 10); // Add spacing
       }
 
       doc.addPage();
@@ -230,10 +232,12 @@ export const BookedPdfGenerator = async (req, res) => {
       doc.fillColor("black");
 
       for (let i = 0; i < booking.bookingDetails.length; i++) {
-        doc.fontSize(16).text(`Booking ${i + 1}:  `, 50, doc.y, {
-          width: 200,
-          continued: true,
-        });
+        doc
+          .fontSize(16)
+          .text(`${booking.bookingDetails[i].bookingType}:`, 50, doc.y, {
+            width: 200,
+            continued: true,
+          });
 
         doc.text(booking.bookingDetails[i].bookingName, {
           width: 300,
