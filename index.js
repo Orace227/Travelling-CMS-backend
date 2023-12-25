@@ -64,83 +64,79 @@ app.use(
   })
 );
 
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.json({ massage: "Welcome to the Travelling CMS Api Server!!" });
 });
 
 // create package//
-app.post("/api/createPackage", CreatePackage);
+app.post("/createPackage", CreatePackage);
 
 // get live packages//
-app.get("/api/getLivePackages", GetLivePackage);
+app.get("/getLivePackages", GetLivePackage);
 
 // get draft packages//
-app.get("/api/getDraftPackages", GetDraftPackage);
+app.get("/getDraftPackages", GetDraftPackage);
 
 // get packages by country, continent, hostel, destinetion and cruise //
-app.get("/api/getPackages", GetPackages);
+app.get("/getPackages", GetPackages);
 
 // update packages//
-app.post("/api/updatePackage", UpdatePackage);
+app.post("/updatePackage", UpdatePackage);
 
 // delete packages//
-app.post("/api/deletePackage", DeletePackage);
+app.post("/deletePackage", DeletePackage);
 
 // generate pdf for all packages//
-app.get("/api/generate-pdf/:id", SamplePdfGenerator);
-app.get("/api/BookedPdfGenerate", BookedPdfGenerator);
+app.get("/generate-pdf/:id", SamplePdfGenerator);
+app.get("/BookedPdfGenerate", BookedPdfGenerator);
 
 // get documents by family member id //
-app.get("/api/getDocuments/x", GetDocuments);
+app.get("/getDocuments/x", GetDocuments);
 
 //delete documents by family member id //
-app.post("/api/deleteDocument", deleteDocument);
+app.post("/deleteDocument", deleteDocument);
 // create client //
-app.post("/api/createClient", CreateClient);
+app.post("/createClient", CreateClient);
 
 // get client //
-app.get("/api/getClients", GetClients);
-app.get("/api/getClientsById", GetClienById);
+app.get("/getClients", GetClients);
+app.get("/getClientsById", GetClienById);
 
 // update client //
-app.post("/api/updateClient", UpdateClient);
+app.post("/updateClient", UpdateClient);
 
 // delete client //
-app.post("/api/deleteClient", DeleteClient);
+app.post("/deleteClient", DeleteClient);
 
 //create a Create Family Members
-app.post("/api/createFamilyMembers", CreateFamilyMembers);
+app.post("/createFamilyMembers", CreateFamilyMembers);
 
 //get all family members for the specified client //
-app.get("/api/getFamilyMembers", GetFamilyMembers);
+app.get("/getFamilyMembers", GetFamilyMembers);
 
 //update family member //
-app.post("/api/updateFamilyMember", UpdateFamilyMember);
+app.post("/updateFamilyMember", UpdateFamilyMember);
 
 //delete family member //
-app.post("/api/DeleteFamilyMember", DeleteFamilyMember);
+app.post("/DeleteFamilyMember", DeleteFamilyMember);
 
-app.post("/api/createBooking", CreateBooking);
+app.post("/createBooking", CreateBooking);
 
-app.get("/api/getBookingsById", GetBookingsById);
-app.get("/api/getBookings", GetBookings);
+app.get("/getBookingsById", GetBookingsById);
+app.get("/getBookings", GetBookings);
 
-app.post("/api/deleteBooking", DeleteBooking);
+app.post("/deleteBooking", DeleteBooking);
 
 // update banner images //
-app.post(
-  "/api/upload",
-  UploadBanner.single("bannerImage"),
-  async (req, res) => {
-    const packageImgPath = req.file.path;
+app.post("/upload", UploadBanner.single("bannerImage"), async (req, res) => {
+  const packageImgPath = req.file.path;
 
-    res
-      .status(200)
-      .json({ message: "Image uploaded successfully", path: packageImgPath });
-  }
-);
+  res
+    .status(200)
+    .json({ message: "Image uploaded successfully", path: packageImgPath });
+});
 
-app.post("/api/deleteBanner", async (req, res) => {
+app.post("/deleteBanner", async (req, res) => {
   try {
     const { filename } = req.body; // Assuming you send the filename in the request body
 
@@ -160,10 +156,10 @@ app.post("/api/deleteBanner", async (req, res) => {
 });
 
 // get banner images //
-app.get("/api/BannerImg/:imageName", GetPackageImg);
+app.get("/BannerImg/:imageName", GetPackageImg);
 
 // update documents of booking //
-app.post("/api/upload-images", UploadDocuments.array("docImg"), (req, res) => {
+app.post("/upload-images", UploadDocuments.array("docImg"), (req, res) => {
   try {
     // Handle the uploaded files here
     const uploadedFilesPath = req.files;
@@ -180,35 +176,25 @@ app.post("/api/upload-images", UploadDocuments.array("docImg"), (req, res) => {
   }
 });
 
-app.get(
-  "/api/BookingDocuments/:clientId/:bookingType/:img",
-  GetUploadedDocuments
-);
+app.get("/BookingDocuments/:clientId/:bookingType/:img", GetUploadedDocuments);
 
-app.post(
-  "/api/upload-common-doc",
-  UploadCommonDoc.array("docImg"),
-  (req, res) => {
-    try {
-      // Handle the uploaded files here
-      const uploadedFilesPath = req.files;
-      console.log("Images uploaded successfully.");
+app.post("/upload-common-doc", UploadCommonDoc.array("docImg"), (req, res) => {
+  try {
+    // Handle the uploaded files here
+    const uploadedFilesPath = req.files;
+    console.log("Images uploaded successfully.");
 
-      // Respond with a success message
-      res.status(200).json({
-        message: "Images uploaded successfully.",
-        uploadedFilesPath: uploadedFilesPath,
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal server error" });
-    }
+    // Respond with a success message
+    res.status(200).json({
+      message: "Images uploaded successfully.",
+      uploadedFilesPath: uploadedFilesPath,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
-);
-app.get(
-  "/api/CommonDocuments/:clientId/:bookingType/:img",
-  GetUploadedCommonDoc
-);
+});
+app.get("/CommonDocuments/:clientId/:bookingType/:img", GetUploadedCommonDoc);
 
 // app.post(
 //   "/upload-Common-images",
@@ -232,13 +218,13 @@ app.get(
 // );
 
 // add countries //
-app.post("/api/CreateCountry", CreateCountry);
-app.get("/api/GetCountries", GetCountries);
-app.post("/api/UpdateCountry", UpdateCountry);
-app.post("/api/DeleteCountry", DeleteCountry);
+app.post("/CreateCountry", CreateCountry);
+app.get("/GetCountries", GetCountries);
+app.post("/UpdateCountry", UpdateCountry);
+app.post("/DeleteCountry", DeleteCountry);
 
 app.post(
-  "/api/uploadCountryImg",
+  "/uploadCountryImg",
   UploadCountryImg.single("countryImg"),
   async (req, res) => {
     const packageImgPath = req.file.path;
@@ -247,13 +233,13 @@ app.post(
   }
 );
 
-app.get("/api/CountryImg/:imageName", GetCountryImg);
+app.get("/CountryImg/:imageName", GetCountryImg);
 
-app.post("/api/CreateInquiry", CreateInquiry);
-app.get("/api/GetInquiry", GetInquiries);
-app.post("/api/DeleteInquiry", DeleteInquiry);
-app.get("/api/ReadInquiry", ReadInquiry);
-app.post("/api/UpdateInquiry", UpdateInquiry);
+app.post("/CreateInquiry", CreateInquiry);
+app.get("/GetInquiry", GetInquiries);
+app.post("/DeleteInquiry", DeleteInquiry);
+app.get("/ReadInquiry", ReadInquiry);
+app.post("/UpdateInquiry", UpdateInquiry);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
