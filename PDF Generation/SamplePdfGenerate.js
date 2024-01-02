@@ -130,6 +130,8 @@ export const SamplePdfGenerator = async (req, res) => {
       addContent("", 10); // Add spacing
       addHtmlSection(doc, packageData.packageBody.tourDetails[i].description);
       addContent("", 10); // Add spacing
+      addContent("", 10); // Add spacing
+      addContent("", 10); // Add spacing
     }
     doc.fontSize(14).text("  ");
     doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
