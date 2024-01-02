@@ -200,7 +200,7 @@ function addSection(doc, items) {
         width: 520,
         align: "justify",
       });
-      // doc.fontSize(10).text(`  `);
+      doc.fontSize(10).text(`  `);
     });
   }
 }
