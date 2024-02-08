@@ -123,13 +123,13 @@ export const SamplePdfGenerator = async (req, res) => {
         18,
         "center"
       );
+      // addContent("", 10); // Add spacing
+
       doc.fillColor("black");
 
-      addContent("", 10); // Add spacing
+      addContent("", 1); // Add spacing
       addHtmlSection(doc, packageData.packageBody.tourDetails[i].description);
-      addContent("", 10); // Add spacing
-      addContent("", 10); // Add spacing
-      addContent("", 10); // Add spacing
+      addContent(" ", 1); // Add spacing
     }
     doc.fontSize(14).text("  ");
     doc.rect(30, doc.y - 4, doc.page.width - 60, 35).fill("#183b83");
@@ -210,6 +210,7 @@ async function addHtmlSection(doc, htmlContent) {
   if (htmlContent) {
     const dom = new JSDOM(htmlContent);
     const body = dom.window.document.body;
+    doc.fontSize(10).text("  ");
 
     const processNode = (node) => {
       switch (node.nodeName) {
