@@ -19,8 +19,6 @@ export const SamplePdfGenerator = async (req, res) => {
       Exclusions: packageData.packageBody.inclusionsAndExclusions.exclusions,
     });
     const basePath = path.join(__dirname, "..");
-    const imagePath = path.join(basePath, packageData.packageImgPath);
-    const imageBuffer = fs.readFileSync(imagePath);
 
     // Calculate the width of the PDF page
     const doc = new PDFDocument();
