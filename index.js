@@ -57,7 +57,11 @@ const db = connectToMongo();
 app.use(express.json());
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL_1, process.env.CLIENT_URL_2],
+    origin: [
+      process.env.CLIENT_URL_1,
+      process.env.CLIENT_URL_2,
+      process.env.CLIENT_URL_3,
+    ],
     // origin: "http://localhost:3000",
     methods: ["GET", "POST", "UPDATE", "DELETE"],
     credentials: true,
@@ -73,10 +77,6 @@ app.post("/createPackage", CreatePackage);
 
 // get live packages//
 app.get("/getLivePackages", GetLivePackage);
-
-
-
-
 
 // get draft packages//
 app.get("/getDraftPackages", GetDraftPackage);
