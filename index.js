@@ -61,6 +61,7 @@ app.use(
       process.env.CLIENT_URL_1,
       process.env.CLIENT_URL_2,
       process.env.CLIENT_URL_3,
+      process.env.CLIENT_URL_4,
     ],
     // origin: "http://localhost:3000",
     methods: ["GET", "POST", "UPDATE", "DELETE"],
